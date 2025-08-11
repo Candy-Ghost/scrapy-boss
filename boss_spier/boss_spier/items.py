@@ -13,3 +13,6 @@ class BossSpierItem(scrapy.Item):
     jobs_mid_name = scrapy.Field()
     jobs_min_name = scrapy.Field()
     jobs_link = scrapy.Field()
+    jobs_name = scrapy.Field()
+    jobs_detail_link = scrapy.Field()
+

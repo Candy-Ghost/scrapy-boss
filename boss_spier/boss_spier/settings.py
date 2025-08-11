@@ -22,10 +22,11 @@ ADDONS = {}
 ROBOTSTXT_OBEY = False
 
 # Concurrency and throttling settings
-#CONCURRENT_REQUESTS = 16
+#CONCURRENT_REQUESTS = 16 #并发数
 # CONCURRENT_REQUESTS_PER_DOMAIN = 1
-DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 5 #设置每个请求之间的下载延迟（单位：秒），用于控制爬虫的请求频率。
 
+# RETRY_TIMES = 3 #定义请求失败后的重试次数（如超时、HTTP 500 错误等）。
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
 
@@ -50,6 +51,7 @@ DOWNLOAD_DELAY = 3
 DOWNLOADER_MIDDLEWARES = {
     # "boss_spier.middlewares.BossSpierDownloaderMiddleware": 543,
     "boss_spier.middlewares.SeleniumMiddleware":543,
+    "boss_spier.middlewares.SeleniumMiddlewareTwe":544
 }
 
 # Enable or disable extensions

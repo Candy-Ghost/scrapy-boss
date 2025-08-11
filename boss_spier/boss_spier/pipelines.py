@@ -9,7 +9,7 @@ from itemadapter import ItemAdapter
 
 
 class BossSpierPipeline:
-    def __init__(self):
+    def __init__(self,):
         self.file = open('jobs_link.json','w',encoding='utf-8')
 
     def process_item(self, item, spider):
