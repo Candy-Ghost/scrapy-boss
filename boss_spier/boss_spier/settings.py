@@ -89,3 +89,8 @@ ITEM_PIPELINES = {
 
 # Set settings whose default value is deprecated to a future-proof value
 # FEED_EXPORT_ENCODING = "utf-8"
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = '123456'
+MYSQL_DATABASE = 'boos_cs'
+MYSQL_TABLE = 'boss_data'

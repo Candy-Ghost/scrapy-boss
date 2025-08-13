@@ -2,19 +2,16 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-from fake_useragent import UserAgent
 from scrapy.http import HtmlResponse
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from scrapy import signals
 from selenium_stealth import stealth
 from selenium.webdriver.chrome.service import Service
 import time
 import random
-import logging
 from selenium.webdriver.common.keys import Keys
-from lxml import html
+
 
 class SeleniumMiddleware:
     def process_request(self, request, spider):
@@ -30,11 +27,11 @@ class SeleniumMiddleware:
             options.add_argument('--disable-blink-features=AutomationControlled')
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option('useAutomationExtension', False)
-
             # 启动浏览器
             driver = webdriver.Chrome(service=service, options=options)
-            driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") # 隐藏navigator.webdriver属性
 
+            # 使用stealth库进一步隐藏自动化特征
             stealth(
                 driver,
                 languages=["zh-CN", "zh"],
@@ -52,7 +49,7 @@ class SeleniumMiddleware:
             # 访问 Boss 直聘
             driver.get(url)
             time.sleep(5)
-            page_source = driver.page_source
+            page_source = driver.page_source  # 获取页面源码
             driver.quit()
             res = HtmlResponse(url=url, body=page_source, encoding="utf-8", request=request)
             return res
@@ -66,7 +63,7 @@ class SeleniumMiddlewareTwe:
     @classmethod
     def from_crawler(cls, crawler):
         middleware = cls()
-        # 注册爬虫关闭时的清理钩子
+        # 将爬虫关闭信号 (spider_closed) 连接到中间件的 spider_closed 方法，关闭浏览器
         crawler.signals.connect(middleware.spider_closed, signal=signals.spider_closed)
         return middleware
 
@@ -109,17 +106,17 @@ class SeleniumMiddlewareTwe:
                 time.sleep(5)
 
                 last_height = driver.execute_script("return document.body.scrollHeight")
-                consecutive_unchange = 0
+                consecutive_unchange = 0  #连续未变化计数
                 max_scroll_attempts = 50  # 最大滚动尝试次数
                 scroll_attempts = 0
-
+                # 滚动控制循环
                 while scroll_attempts < max_scroll_attempts:
                     scroll_attempts += 1
 
                     # 随机决定滚动方式
                     if random.random() < 0.9:
                         # 使用JavaScript滚动（兼容性更好）
-                        scroll_amount = random.randint(300, 800)
+                        scroll_amount = random.randint(300, 800)  # 随机滚动距离
                         driver.execute_script(f"window.scrollBy(0, {scroll_amount})")
 
                         # 添加人类化的滚动停顿
