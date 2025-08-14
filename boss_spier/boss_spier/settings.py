@@ -94,3 +94,10 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = '123456'
 MYSQL_DATABASE = 'boos_cs'
 MYSQL_TABLE = 'boss_data'
+
+SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
+SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
+DEPTH_PRIORITY = 1  # 深度优先策略（可选）
+
+DUPEFILTER_DEBUG = True  # 显示所有重复请求
+LOG_LEVEL = 'DEBUG'

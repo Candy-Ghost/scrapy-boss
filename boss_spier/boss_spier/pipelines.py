@@ -15,7 +15,7 @@ from scrapy.exceptions import DropItem
 
 # class BossSpierPipeline:
 #     def __init__(self,):
-#         self.file = open('jobs_link.json','w',encoding='utf-8')
+#         self.file = open('cs.json','w',encoding='utf-8')
 #
 #     def process_item(self, item, spider):
 #         item = dict(item)
@@ -96,7 +96,14 @@ class BossSpierPipeline:
             'jobs_max_name': adapter.get('jobs_max_name', None), #没有jobs_max_name的时候就默认none
             'jobs_mid_name': adapter.get('jobs_mid_name',None),
             'jobs_min_name': adapter.get('jobs_min_name', None),
-            'jobs_link': adapter.get('jobs_link', None),
+            'jobs_name': adapter.get('jobs_name', None),
+            'pay': adapter.get('pay', None),
+            'address': adapter.get('address', None),
+            'experience': adapter.get('experience', None),
+            'education': adapter.get('education', None),
+            'benefit': adapter.get('benefit', None),
+            'position': adapter.get('position', None),
+
              # 允许 NULL
         }
 

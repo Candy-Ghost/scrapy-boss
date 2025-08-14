@@ -2,8 +2,10 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import requests
 from scrapy.http import HtmlResponse
 from selenium import webdriver
+from selenium.common import InvalidSessionIdException, WebDriverException
 from selenium.webdriver.common.by import By
 from scrapy import signals
 from selenium_stealth import stealth
@@ -72,10 +74,14 @@ class SeleniumMiddlewareTwe:
         if self.driver is None:
             chrome_driver_path = r"D:\Program Files\chromedriver-win64\chromedriver.exe"
             service = Service(executable_path=chrome_driver_path)
-
+            api_url = "https://dps.kdlapi.com/api/getdps?secret_id=o4l7sc3jex4b9ylskndf&num=1&signature=c0wsmknpo3pqvgkock5z3m4xlepptnh8"
+            response = requests.get(api_url)
+            IP = response.text
+            PROXY = f"http://{IP}"
             options = webdriver.ChromeOptions()
             # socks5_proxy = "socks5://128.199.202.122:1080"  # 示例地址，请替换为您的代理
             # options.add_argument(f'--proxy-server={socks5_proxy}')
+            options.add_argument(f'--proxy-server={PROXY}')
             options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
             options.add_argument('--disable-blink-features=AutomationControlled')
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -100,10 +106,10 @@ class SeleniumMiddlewareTwe:
 
     def process_request(self, request, spider):
         url = request.url
-        if url != "https://www.zhipin.com":
+        if request.meta.get('middleware') == 'A':
                 driver = self.init_driver()
                 driver.get(url)
-                time.sleep(5)
+                time.sleep(3)
 
                 last_height = driver.execute_script("return document.body.scrollHeight")
                 consecutive_unchange = 0  #连续未变化计数
@@ -160,6 +166,24 @@ class SeleniumMiddlewareTwe:
                 page_source = driver.page_source
                 res = HtmlResponse(url=url, body=page_source, encoding="utf-8", request=request)
                 return res
+
+
+        if request.meta.get('middleware') == 'B':
+            try:
+                driver = self.init_driver()
+                driver.get(url)
+                time.sleep(5)
+                page_source = driver.page_source
+                res = HtmlResponse(url=url, body=page_source, encoding="utf-8", request=request)
+                return res
+
+            except InvalidSessionIdException as e:
+                spider.logger.error(f"Session invalid: {e}, retrying")
+                return request  # 重新调度
+
+            except WebDriverException as e:
+                spider.logger.error(f"WebDriver error: {e}")
+                return None  # 跳过该请求
         return None
 
     def reset_browser(self):

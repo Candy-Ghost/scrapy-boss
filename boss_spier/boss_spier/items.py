@@ -15,10 +15,10 @@ class BossSpierItem(scrapy.Item):
     jobs_link = scrapy.Field()
     jobs_name = scrapy.Field()
     jobs_detail_link = scrapy.Field()
-    jobs_detail_name = scrapy.Field()
     pay = scrapy.Field()
     address = scrapy.Field()
     experience = scrapy.Field()
     education = scrapy.Field()
+    benefit = scrapy.Field()
     position = scrapy.Field()
 
