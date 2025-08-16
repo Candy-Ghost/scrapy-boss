@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import random
 
 BOT_NAME = "boss_spier"
 
@@ -22,9 +23,9 @@ ADDONS = {}
 ROBOTSTXT_OBEY = False
 
 # Concurrency and throttling settings
-#CONCURRENT_REQUESTS = 16 #并发数
+CONCURRENT_REQUESTS = 1 #并发数
 # CONCURRENT_REQUESTS_PER_DOMAIN = 1
-DOWNLOAD_DELAY = 5 #设置每个请求之间的下载延迟（单位：秒），用于控制爬虫的请求频率。
+DOWNLOAD_DELAY = 1   #random.choice([4,5,6,7,8,9,10]) #设置每个请求之间的下载延迟（单位：秒），用于控制爬虫的请求频率。
 
 # RETRY_TIMES = 3 #定义请求失败后的重试次数（如超时、HTTP 500 错误等）。
 # Disable cookies (enabled by default)
@@ -50,7 +51,7 @@ DOWNLOAD_DELAY = 5 #设置每个请求之间的下载延迟（单位：秒），
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # "boss_spier.middlewares.BossSpierDownloaderMiddleware": 543,
-    "boss_spier.middlewares.SeleniumMiddleware":543,
+    # "boss_spier.middlewares.SeleniumMiddleware":543,
     "boss_spier.middlewares.SeleniumMiddlewareTwe":544
 }
 
