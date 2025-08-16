@@ -5,7 +5,7 @@
 
 import scrapy
 
-
+"""设置爬虫时获取信息的键名"""
 class BossSpierItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()

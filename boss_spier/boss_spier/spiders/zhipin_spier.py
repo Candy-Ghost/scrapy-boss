@@ -5,10 +5,11 @@ import time
 import scrapy
 from ..items import BossSpierItem
 class ZhipinSpierSpider(scrapy.Spider):
-    name = "zhipin_spier"
-    allowed_domains = ["zhipin.com"]
-    start_urls = ["https://www.zhipin.com"]
+    name = "zhipin_spier"   #爬虫名字
+    allowed_domains = ["zhipin.com"] #允许爬虫的域名
+    start_urls = ["https://www.zhipin.com"] #起始url
 
+    """response回来的页面代码清洗数据"""
     def parse(self, response):
         jobs_max_cls = response.xpath('//*[@id="main"]/div/div[1]/div/div[1]/dl/dd/b')
         for n,max_cls in enumerate(jobs_max_cls, 1) :
@@ -24,15 +25,15 @@ class ZhipinSpierSpider(scrapy.Spider):
                     item['jobs_link'] = 'https://www.zhipin.com/web/geek/jobs?query=&city=101280600&position='+jobs_link1
                     key = random.choice(['A', 'B'])
                     yield scrapy.Request(
-                            url = item['jobs_link'] ,
-                            callback = self.parse_jobs,
-                            meta={'item': item,
-                                  'middleware': key},
+                            url = item['jobs_link'] ,  #需要往下爬的url
+                            callback = self.parse_jobs, #获取这次 url response 的清洗方法
+                            meta={'item': item, #从上一个url获取的信息传给下一个url response
+                                  'middleware': key}, # 选用中间件
                     )
                     # yield item
 
     def parse_jobs(self,response):
-        item = response.meta['item']
+        item = response.meta['item']  #从上个页面传下来的数据
         jobs_name_link = response.xpath('//*[@id="wrap"]/div[2]/div[3]/div/div/div[1]/ul/div/div/li/div[1]/div/a')
         if not jobs_name_link:
             return
@@ -44,7 +45,8 @@ class ZhipinSpierSpider(scrapy.Spider):
             jobs_link["jobs_name"] = jobs.xpath('./text()').extract_first()
             link = jobs.xpath('./@href').extract_first()
             jobs_link["jobs_detail_link"] = 'https://www.zhipin.com'+link
-            yield jobs_link
+            yield jobs_link  #把 jobs_link 传给管道存储
+
             # yield scrapy.Request(
             #     url=jobs_link["jobs_detail_link"],
             #     callback=self.parse_jobs_detail,

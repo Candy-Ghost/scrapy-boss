@@ -20,10 +20,10 @@ ADDONS = {}
 #USER_AGENT = "boss_spier (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
+ROBOTSTXT_OBEY = False #协议，一般不遵守
 
 # Concurrency and throttling settings
-CONCURRENT_REQUESTS = 1 #并发数
+#CONCURRENT_REQUESTS = 1 #并发数默认16
 # CONCURRENT_REQUESTS_PER_DOMAIN = 1
 DOWNLOAD_DELAY = 1   #random.choice([4,5,6,7,8,9,10]) #设置每个请求之间的下载延迟（单位：秒），用于控制爬虫的请求频率。
 
@@ -49,6 +49,7 @@ DOWNLOAD_DELAY = 1   #random.choice([4,5,6,7,8,9,10]) #设置每个请求之间�
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+"""设置启用中间件"""
 DOWNLOADER_MIDDLEWARES = {
     # "boss_spier.middlewares.BossSpierDownloaderMiddleware": 543,
     # "boss_spier.middlewares.SeleniumMiddleware":543,
@@ -64,7 +65,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "boss_spier.pipelines.BossSpierPipeline": 300,
+   "boss_spier.pipelines.BossSpierPipeline": 300,  # 使用管道
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,15 +91,17 @@ ITEM_PIPELINES = {
 
 # Set settings whose default value is deprecated to a future-proof value
 # FEED_EXPORT_ENCODING = "utf-8"
+"""数据库设置"""
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '123456'
 MYSQL_DATABASE = 'boos_cs'
 MYSQL_TABLE = 'boss_data'
 
+"""设置爬虫广度爬取，先进先出（例如：爬完岗位页面才会爬详细页面）"""
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
-DEPTH_PRIORITY = 1  # 深度优先策略（可选）
+DEPTH_PRIORITY = 1  #
 
 DUPEFILTER_DEBUG = True  # 显示所有重复请求
 LOG_LEVEL = 'DEBUG'

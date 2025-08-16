@@ -12,10 +12,10 @@ from datetime import datetime
 
 from scrapy.exceptions import DropItem
 
-
+"""存到json"""
 class BossSpierPipeline:
     def __init__(self,):
-        self.file = open('cs.json','w',encoding='utf-8')
+        self.file = open('css.json','w',encoding='utf-8')
 
     def process_item(self, item, spider):
         item = dict(item)
@@ -27,8 +27,9 @@ class BossSpierPipeline:
         self.file.close()
 
 #
-#
+# """存到MySQL"""
 # class BossSpierPipeline:
+      # 初始化数据库（配置）
 #     def __init__(self, host, user, password, database, table):
 #         self.host = host
 #         self.user = user
@@ -43,7 +44,7 @@ class BossSpierPipeline:
 #     @classmethod
 #     def from_crawler(cls, crawler):
 #         """
-#         从 Scrapy 设置中获取 MySQL 配置
+#         从 settings 中获取 MySQL 配置
 #         """
 #         return cls(
 #             host=crawler.settings.get('MYSQL_HOST'),  # 使用自定义键名
@@ -93,7 +94,7 @@ class BossSpierPipeline:
 #
 #         # 准备数据 - 设置默认值防止空值
 #         data = {
-#             'jobs_max_name': adapter.get('jobs_max_name', None), #没有jobs_max_name的时候就默认none
+#             'jobs_max_name': adapter.get('jobs_max_name', None), #没有 jobs_max_name 的时候就默认none （根据数据库的键）
 #             'jobs_mid_name': adapter.get('jobs_mid_name',None),
 #             'jobs_min_name': adapter.get('jobs_min_name', None),
 #             'jobs_name': adapter.get('jobs_name', None),
