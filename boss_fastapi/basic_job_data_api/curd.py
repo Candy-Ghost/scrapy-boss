@@ -1,17 +1,24 @@
 from fastapi import Query, HTTPException
 from typing import Optional
+from models import *
 
-class ParamsValidator:
-    @classmethod
-    def validate_params(
-        cls,
-        industry: Optional[str] = Query(None),
-        district: Optional[str] = Query(None),
-        position: Optional[str] = Query(None)
-    ):
-        if not any([industry, district, position]):
-            raise HTTPException(
-                status_code=400,
-                detail="至少需要提供一个查询参数（industry/district/position）"
-            )
-        return {"industry": industry, "district": district, "position": position}
+
+async def query_boss_data(industry=None, district=None, position=None):
+    # 动态构建查询条件
+    filters = {}
+    if industry is not None:
+        filters["industryName"] = industry
+    if district is not None:
+        filters["areaDistrict"] = district
+    if position is not None:
+        filters["positionName"] = position
+
+    # 执行查询
+    data = await BossData.filter(**filters)
+    data_list = list(data)  # 转为列表（如果 data 是异步生成器）
+    data_len = len(data_list)
+
+    return {
+        "sum": data_len,
+        "data": data_list
+    }

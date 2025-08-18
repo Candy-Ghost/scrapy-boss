@@ -3,7 +3,7 @@ import uvicorn
 from settings import TORTOISE_ORM
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
-
+from basic_job_data_api.port_api import basic_job_data
 app=FastAPI()
 
 # app.add_middleware(
@@ -14,7 +14,7 @@ app=FastAPI()
 #     allow_headers=["*"],
 # )
 
-# app.include_router(user_api,tags=['账号管理api接口'],)
+app.include_router(basic_job_data,tags=['基础职位数据'],)
 # app.include_router(index_api,prefix="/user",tags=['主页接口'],)
 
     #mysql
