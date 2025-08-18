@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Form, Depends, HTTPException
+from fastapi import APIRouter, Form, Depends
 from models import *
 from boss_fastapi.basic_job_data_api.curd import query_boss_data, tantile_data, skill_analyze, position_statistics_data
 from boss_fastapi.basic_job_data_api.data_models import JobQueryParams, SalaryDistributionStatistics, SkillAnalyze, \

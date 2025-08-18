@@ -4,6 +4,8 @@ from settings import TORTOISE_ORM
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from basic_job_data_api.port_api import basic_job_data
+from enterprise_dimension_api.port_api import enterprise_dimension
+
 app=FastAPI()
 
 # app.add_middleware(
@@ -14,8 +16,10 @@ app=FastAPI()
 #     allow_headers=["*"],
 # )
 
-app.include_router(basic_job_data,tags=['基础职位数据'],)
-# app.include_router(index_api,prefix="/user",tags=['主页接口'],)
+app.include_router(basic_job_data,tags=['基础职位数据分析'],)
+app.include_router(enterprise_dimension,tags=['企业维度分析'],)
+
+# app.include_router(index_api,prefix="/user")
 
     #mysql
 register_tortoise(
