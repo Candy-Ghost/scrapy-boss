@@ -95,8 +95,8 @@ ITEM_PIPELINES = {
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '123456'
-MYSQL_DATABASE = 'boos_cs'
-MYSQL_TABLE = 'boss_data'
+MYSQL_DATABASE = 'fastapi-boss'
+MYSQL_TABLE = 'bossdata'
 
 """设置爬虫广度爬取，先进先出（例如：爬完岗位页面才会爬详细页面）"""
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'

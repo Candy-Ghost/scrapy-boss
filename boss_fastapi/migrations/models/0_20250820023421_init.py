@@ -11,14 +11,13 @@ async def upgrade(db: BaseDBAsyncClient) -> str:
     `brandName` VARCHAR(500) COMMENT '公司名称',
     `locationName` VARCHAR(500) COMMENT '工作地点',
     `areaDistrict` VARCHAR(500) COMMENT '区域',
-    `businessDistrict` VARCHAR(500) COMMENT '商业区',
     `experienceName` VARCHAR(500) COMMENT '工作经验',
     `degreeName` VARCHAR(500) COMMENT '学历',
     `salaryDesc` VARCHAR(500) COMMENT '薪资',
     `showSkills` VARCHAR(1000) COMMENT '技能要求',
     `postDescription` LONGTEXT COMMENT '职位描述',
     `address` VARCHAR(500) COMMENT '公司具体地址',
-    `labels` VARCHAR(500) COMMENT '福利',
+    `labels` VARCHAR(1000) COMMENT '福利',
     `scaleName` VARCHAR(500) COMMENT '规模'
 ) CHARACTER SET utf8mb4;
 CREATE TABLE IF NOT EXISTS `aerich` (

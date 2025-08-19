@@ -107,7 +107,7 @@ class SeleniumMiddlewareTwe:
             UA = random.choice(self.user_agents) #随机获取上面实例化的ua
             chrome_driver_path = r"D:\Program Files\chromedriver-win64\chromedriver.exe"  #自己下载的chromedriver版本要和浏览器同步不然运行不了
             service = Service(executable_path=chrome_driver_path)
-            api_url = "你的代理ip url地址"
+            api_url = "https://dps.kdlapi.com/api/getdps?secret_id=o4l7sc3jex4b9ylskndf&num=1&signature=c0wsmknpo3pqvgkock5z3m4xlepptnh8"
             response = requests.get(api_url) #请求代理url获取ip
             PROXY = f"http://{response.text}"
             # PROXY = f"http://218.95.37.135:21580"
@@ -239,7 +239,7 @@ class SeleniumMiddlewareTwe:
                 driver = self.init_driver()
                 driver.get(url)
                 element = WebDriverWait(driver, 60).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, "job-card-box"))
+                    EC.presence_of_element_located((By.CLASS_NAME, "job-sec-text"))
                 )
 
                 time.sleep(random.uniform(1, 2))
