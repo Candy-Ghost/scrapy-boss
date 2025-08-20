@@ -34,7 +34,7 @@ async def skill_analysis(params : SkillAnalyze = Depends()):
     degree = params.degree
     scale = params.scale
 
-    data = await skill_analyze(industry, degree, position, experience,scale)
+    data = await skill_analyze(industry, position, experience,degree, scale)
     return data
 
 @basic_job_data.get('/position/statistics',summary="岗位统计分析")

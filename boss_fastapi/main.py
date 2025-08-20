@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from basic_job_data_api.port_api import basic_job_data
 from enterprise_dimension_api.port_api import enterprise_dimension
 from job_seeker_dimension_api.port_api import job_seeker_dimension
-
+from competitive_analysis_api.port_api import competitive_analysis
 app=FastAPI()
 
 # app.add_middleware(
@@ -20,6 +20,7 @@ app=FastAPI()
 app.include_router(basic_job_data,tags=['基础职位数据分析'],)
 app.include_router(enterprise_dimension,tags=['企业维度分析'],)
 app.include_router(job_seeker_dimension,tags=['求职者维度分析'],)
+app.include_router(competitive_analysis,tags=['根据关键词分析'],)
 
 # app.include_router(index_api,prefix="/user")
 

@@ -155,7 +155,7 @@ async def skill_analyze(industry=None, position=None, experience=None, degree=No
             continue
 
     # 获取出现次数最多的前3个技能
-    top_skills = skill_counter.most_common(3)
+    top_skills = skill_counter.most_common()
 
     # 格式化结果：返回[{"skill": "java", "count": 10}, ...]这样的形式
     result = [{"skill": skill, "count": count} for skill, count in top_skills]
