@@ -10,22 +10,21 @@ class ZhipinSpierSpider(scrapy.Spider):
 
     """response回来的页面代码清洗数据"""
     def parse(self, response):
-        jobs_max_cls = response.xpath('//*[@id="main"]/div/div[1]/div/div[1]/dl[1]/dd/b')
+        jobs_max_cls = response.xpath('//*[@id="main"]/div/div[1]/div/div[1]/dl/dd/b')
         for n,max_cls in enumerate(jobs_max_cls, 1) :
-            jobs_mid_cls = response.xpath(f'//*[@id="main"]/div/div[1]/div/div[1]/dl[{n}]/div/ul/li[1]/h4')
+            jobs_mid_cls = response.xpath(f'//*[@id="main"]/div/div[1]/div/div[1]/dl[{n}]/div/ul/li/h4')
             for m,mid_cls in enumerate(jobs_mid_cls, 1) :
-                jobs_min_cls = response.xpath(f'//*[@id="main"]/div/div[1]/div/div[1]/dl[{n}]/div/ul/li[{m}]/div/a[1]')
+                jobs_min_cls = response.xpath(f'//*[@id="main"]/div/div[1]/div/div[1]/dl[{n}]/div/ul/li[{m}]/div/a')
                 for min_cls in jobs_min_cls :
                     item = BossSpierItem()
                     item['position'] = min_cls.xpath('./text()').extract_first()
                     jobs_link1 = min_cls.xpath('./@ka').re_first(r'\d+')
                     jobs_link = 'https://www.zhipin.com/web/geek/jobs?query=&city=101280600&position='+jobs_link1
-                    key = random.choice(['A', 'B'])
                     yield scrapy.Request(
                             url = jobs_link ,  #需要往下爬的url
                             callback = self.parse_jobs, #获取这次 url response 的清洗方法
                             meta={'item': item, #从上一个url获取的信息传给下一个url response
-                                  'middleware': 'A'}, # 选用中间件
+                                  'middleware': 'C'}, # 选用中间件
                     )
                     # yield item
 

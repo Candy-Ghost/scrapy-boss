@@ -6,7 +6,7 @@ from boss_fastapi.job_seeker_dimension_api.data_models import LabelsTags, Qualif
 
 job_seeker_dimension = APIRouter()
 
-@job_seeker_dimension.get('/labels/tags',summary="求职者技能标签分布")
+@job_seeker_dimension.get('/labels/tags',summary="求职者福利标签分布")
 async def job_labels(params : LabelsTags = Depends()):
     district = params.district
     position = params.position

@@ -173,7 +173,7 @@ class SeleniumMiddlewareTwe:
                     driver.get(url)
 
                     #请求url后等待标签元素为class = job-card-box 出现后才执行后面的代码，最多等60秒，60秒后报错（结合报错处理触发反爬，ip没用、ip过期等）
-                    WebDriverWait(driver, 60).until(
+                    WebDriverWait(driver, 5).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "job-card-box"))
                     )
 
@@ -238,8 +238,27 @@ class SeleniumMiddlewareTwe:
                 self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": new_ua})
                 driver = self.init_driver()
                 driver.get(url)
-                element = WebDriverWait(driver, 60).until(
+                element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.CLASS_NAME, "job-sec-text"))
+                )
+
+                time.sleep(random.uniform(1, 2))
+
+                # 随机小滚动距离（不需要下滑渲染，只是多作动作模拟人操作）
+                scroll_amounts = random.randint(50, 100)
+                driver.execute_script(f"window.scrollBy(0, {scroll_amounts})")
+
+                page_source = driver.page_source
+                res = HtmlResponse(url=url, body=page_source, encoding="utf-8", request=request)
+                return res
+
+            if request.meta.get('middleware') == 'C': # 测试用
+
+                self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": new_ua})
+                driver = self.init_driver()
+                driver.get(url)
+                element = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, "job-card-box"))
                 )
 
                 time.sleep(random.uniform(1, 2))
